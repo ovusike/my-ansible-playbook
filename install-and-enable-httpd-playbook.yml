@@ -1,0 +1,32 @@
+---
+- name: Create user black-panther
+  hosts: all
+  become: true
+  tasks:
+    - name: Create a user thanos with expire
+      ansible.builtin.user:
+        name: thanos
+        comment: to expire december 31 2023
+        expires: 1704009601
+
+    - name: create a user called john in a group called root
+      ansible.builtin.user:
+        name: john
+        groups: root
+        append: yes
+        comment: user created in group root
+
+    - name: Install the latest version of Apache
+      ansible.builtin.yum:
+        name: httpd
+        state: latest 
+
+    - name: Start service httpd, if not started
+      ansible.builtin.service:
+        name: httpd
+        state: started
+
+    - name: Enable service httpd, and not touch the state
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
